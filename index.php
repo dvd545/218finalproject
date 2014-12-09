@@ -1,5 +1,6 @@
 <?php
-$program = new program();
+
+
 class program{
 	
 	function __construct(){
@@ -29,7 +30,7 @@ abstract class page{
 	function __construct($arg = NULL){
 		
 		if($_SERVER['REQUEST_METHOD'] == 'GET'){
-			
+			 $this->menu();
 			$this->get();
 		}
 		else{
@@ -39,6 +40,19 @@ abstract class page{
 	}
 	
 	function menu(){
+        $this->content .= '
+		<ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="index.php?page=q1">Highest Enrollment</a></li>
+            <li><a href="index.php?page=q2">Largest Total Liablility</a></li>
+            <li><a href="index.php?page=q3">Largest Net Assets</a></li>
+            <li><a href="index.php?page=q4">Largest Net Assets Per Students</a></li>
+            <li><a href="index.php?page=q5">Largest Percent Increase</a></li>
+            </ul>
+        
+        
+        ';
+        
 				
 	}
 		
@@ -60,18 +74,94 @@ abstract class page{
 class home extends page{
 	
 	function get(){
-		$this->content = '
-		<ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="index.php?page=q1">Highest Enrollment</a></li>
-            <li><a href="index.php?page=q2">Largest Total Liablility</a></li>
-            <li><a href="index.php?page=q3">Largest Net Assets</a></li>
-            <li><a href="index.php?page=q4">Largest Net Assets Per Students</a></li>
-            <li><a href="index.php?page=q5">Largest Percent Increase</a></li>
-            </ul>
-        
+        $this->content .= '
+		  <h3>Web application that displays SQL queries and displays answers</h3>
         
         ';
+		
 	}
 	
 }
+
+
+
+class q1 extends page {
+
+    function get(){
+        $this->content .= "
+        <div>
+            <h3>Colleges that have the highest enrollment</h3>
+        <div>";
+
+            $sqlconnect = \Lib\SqlCommands::sqlConnect($vars);
+    
+}
+
+
+}
+
+
+
+
+class q2 extends page{
+
+    public function get(){
+        $this->content .= '
+        
+        <h3>Colleges with the largest amount of total liabilities</h3>
+    
+    ';
+    }
+
+
+
+}
+
+class q3 extends page{
+
+    public function get(){
+        $this->content .= '
+        
+        <h3>Colleges with the largest amount of net assets</h3>
+    
+    ';
+    }
+
+
+
+}
+
+class q4 extends page{
+
+    public function get(){
+        $this->content .= '
+        
+        <h3>Colleges with the largest amount of net assets per student</h3>
+    
+    ';
+    }
+
+
+
+}
+
+class q5 extends page{
+
+    public function get(){
+        $this->content .= '
+        
+        <h3>Colleges with the largest percentage increase in enrollment between the years of 2011 and 2010</h3>
+    
+    ';
+    }
+
+}
+
+
+
+require 'autoloader.php';
+$program = new program();
+
+
+
+?>
