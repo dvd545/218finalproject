@@ -1,13 +1,5 @@
 <?php
-ini_set('display_errors', 'On');
-
-require 'autoloader.php';
-$stuff = \Lib\sql::sqlConnect('10');
-
-$server = new program();
-
-
-
+$program = new program();
 class program{
 	
 	function __construct(){
@@ -29,17 +21,18 @@ class program{
 	
 	
 }
-
-
+	
 abstract class page{
 	
 	public $content;
+	
 	function __construct($arg = NULL){
 		
 		if($_SERVER['REQUEST_METHOD'] == 'GET'){
 			
-			$this->content();
-		}else{
+			$this->get();
+		}
+		else{
 			
 			$this->post();
 		}
@@ -60,16 +53,15 @@ abstract class page{
 		echo $this->content;
 	}
 	
+	
+	
 }
-
-
 	
 class home extends page{
 	
-	function content(){
+	function get(){
 		$this->content = '
-		
-		   <ul>
+		<ul>
             <li><a href="index.php">Home</a></li>
             <li><a href="index.php?page=q1">Highest Enrollment</a></li>
             <li><a href="index.php?page=q2">Largest Total Liablility</a></li>
@@ -77,92 +69,9 @@ class home extends page{
             <li><a href="index.php?page=q4">Largest Net Assets Per Students</a></li>
             <li><a href="index.php?page=q5">Largest Percent Increase</a></li>
             </ul>
-		';
+        
+        
+        ';
 	}
 	
 }
-
-class q1 extends page{
-    public function content(){
-        $this->content .= '
-        
-            <div>
-                <h1>Question 1</h1>
-                <h3>shows the colleges that have the highest enrollment</h3>
-            
-            
-            </div>';
-    
-    }
-
-
-}
-
-class q2 extends page{
-    public function content(){
-        $this->content .= '
-        
-            <div>
-                <h1>Question 2</h1>
-                <h3>Colleges with the highest liabilities</h3>
-            
-            
-            </div>';
-    
-    }
-
-
-}
-class q3 extends page{
-    public function content(){
-        $this->content .= '
-        
-            <div>
-                <h1>Question 3</h1>
-                <h3>Colleges that have the highest net assets</h3>
-            
-            
-            </div>';
-    
-    }
-
-
-}
-
-class q4 extends page{
-    public function content(){
-        $this->content .= '
-        
-            <div>
-                <h1>Question 4</h1>
-                <h3>Colleges that have the highest net assets per student</h3>
-            
-            
-            </div>';
-    
-    }
-
-
-}
-class q extends page{
-    public function content(){
-        $this->content .= '
-        
-            <div>
-                <h1>Question 1</h1>
-                <h3>Colleges that have the highest percent increase enrollment</h3>
-            
-            
-            </div>';
-    
-    }
-
-
-}
-
-
-
-
-
-?>
-
