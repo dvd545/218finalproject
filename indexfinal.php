@@ -39,7 +39,7 @@
   <div class="navbar-collapse collapse navbar-responsive-collapse">
     <ul class="nav navbar-nav">
         <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Questions <b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sql Queries <b class="caret"></b></a>
         <ul class="dropdown-menu">
             <li><a href="indexfinal.php?page=q1">Highest Enrollment</a></li>
             <li><a href="indexfinal.php?page=q2">Largest Total Liablility</a></li>
@@ -56,8 +56,8 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>IS 218 Final Project</h1>
-        <p>Coded by David Schmidt</p>
+        <h1 style="text-align:center">IS 218 Final Project</h1>
+        <p>Web application that displays statistics about colleges. Created by David Schmidt</p>
       </div>
     </div>
 
@@ -133,7 +133,7 @@
             class home extends page{
 
             function get(){
-                $this->content .= '<h3>Web application that displays SQL queries and displays answers</h3>';
+                $this->content .= '<h3>Queries are sent to a SQL database and returned to display the answers to the following</h3>';
                     }
 
               }
@@ -227,9 +227,12 @@
             ?>
 
             
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          <a href="indexfinal.php?page=q1" class="btn btn-success btn-lg btn-block">Colleges that have the highest enrollment</a>
+          <a href="indexfinal.php?page=q2" class="btn btn-success btn-lg btn-block">Colleges with the largest amount of total liabilities</a>
+          <a href="indexfinal.php?page=q3" class="btn btn-success btn-lg btn-block">Colleges with the largest amount of net assets</a>
+          <a href="indexfinal.php?page=q4" class="btn btn-success btn-lg btn-block">Colleges with the largest amount of net assets per student</a>
+          <a href="indexfinal.php?page=q5" class="btn btn-success btn-lg btn-block">Colleges with the largest percentage increase in enrollment between the years of 2011 and 2010</a>
+
         </div>
 
       </div>
