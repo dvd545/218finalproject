@@ -4,7 +4,7 @@
 ini_set('display_errors', 'On');
 ini_set("memory_limit","-1");
 
-/*
+
 $csv = new CSVLoader();
 $data = $csv->openFile('2011var.csv');
 $csv->writeToDatabase($data);
