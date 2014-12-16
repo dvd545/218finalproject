@@ -2,7 +2,7 @@
 namespace Lib;
 
 class Html{
-    public static function Table($results){
+    public static function TableEnrollment($results){
         $table = "<table class='table table-striped table-hover '>
                                           <thead>
                                             <tr>
@@ -14,13 +14,33 @@ class Html{
                                         ";
         foreach($results as $row){
                         $table .= "<tr><td>" . $row['INSTNM'] . "</td>";
-                        $table .= "<td>" . $row['EFY2011'] . "</td></tr>";
+                            $table .= "<td>" . $row['EFY2011'] . "</td></tr>";
 
                         }
         $table .= "</tbody></table>";
         return $table;
         
     }
+    public static function TableBase($results){
+        $table = "<table class='table table-striped table-hover '>
+                                          <thead>
+                                            <tr>
+                                              <th>College Name</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                        ";
+        foreach($results as $row){
+                        $table .= "<tr><td>" . $row['INSTNM'] . "</td></tr>";
+
+                        }
+        $table .= "</tbody></table>";
+        return $table;
+        
+    }
+    
+    
+    
 }
 
 

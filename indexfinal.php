@@ -57,7 +57,7 @@
     <div class="jumbotron">
       <div class="container">
         <h1 style="text-align:center">IS 218 Final Project</h1>
-        <p>Web application that displays statistics about colleges. Created by David Schmidt</p>
+        <p style="text-align:center">Web application that displays lists of colleges. Created by David Schmidt</p>
       </div>
     </div>
 
@@ -108,16 +108,16 @@
 
             class home extends page{
                 function get(){
-                    $this->content .= '<h3>Queries are sent to a SQL database and returned to display the answers to the following</h3>';
+                    $this->content .= '<h3>Queries are sent to a SQL database and return the top 20 answers to the following</h3>';
                     }
 
                 }
 
             class q1 extends page{
                 public function get(){
-                    $query = "SELECT c.INSTNM, e.EFY2011 FROM enrollment e INNER JOIN college c on e.UNITID=c.UNITID ORDER BY e.EFY2011 DESC LIMIT 10";
+                    $query = "SELECT c.INSTNM, e.EFY2011 FROM enrollment e INNER JOIN college c on e.UNITID=c.UNITID ORDER BY e.EFY2011 DESC LIMIT 20";
                     $results = \Lib\Sql::connect($query);
-                    $table = \Lib\Html::Table($results);
+                    $table = \Lib\Html::TableEnrollment($results);
                     $this->content .= '<div><h3>Colleges that have the highest enrollment</h3></div>';
                     $this->content .= $table;
                     
@@ -128,43 +128,46 @@
             class q2 extends page{
                 public function get(){
                     $this->content .= '<h3>Colleges with the largest amount of total liabilities</h3>';
+                    $query = "SELECT c.INSTNM, f.LIAB011 FROM college c INNER JOIN finance f ON c.UNITID=f.UNITID ORDER BY f.LIAB011 DESC LIMIT 20";
+                    $results = \Lib\Sql::connect($query);
+                    $table = \Lib\Html::TableBase($results);
+                    $this->content .= $table;
+                    
+                    
+                    
                 }
             }
 
             class q3 extends page{
-
                 public function get(){
-                    $this->content .= '
-
-                    <h3>Colleges with the largest amount of net assets</h3>
-
-                ';
+                    $this->content .= '<h3>Colleges with the largest amount of net assets</h3>';
+                    $query = "SELECT c.INSTNM, f.ASSE011 FROM college c INNER JOIN finance f ON c.UNITID=f.UNITID ORDER BY f.ASSE011 DESC LIMIT 20";
+                    $results = \Lib\Sql::connect($query);
+                    $table = \Lib\Html::TableBase($results);
+                    $this->content .= $table;
+                    
                 }
             }
 
         class q4 extends page{
-
             public function get(){
-                $this->content .= '
-
-                <h3>Colleges with the largest amount of net assets per student</h3>
-
-            ';
+                $this->content .= '<h3>Colleges with the largest amount of net assets per student</h3>';
+                $query = "SELECT c.INSTNM FROM college c INNER JOIN finance f ON f.UNITID=c.UNITID INNER JOIN enrollment e ON c.UNITID=e.UNITID ORDER BY (f.ASSE011/e.EFY2011) DESC LIMIT 20";
+                $results = \Lib\Sql::connect($query);
+                $table = \Lib\Html::TableBase($results);
+                $this->content .= $table;
             }
         }
 
         class q5 extends page{
-
             public function get(){
-                $this->content .= '
-                <h3>Colleges with the largest percentage increase in enrollment between the years of 2011 and 2010</h3>
-
-            ';
+                $this->content .= '<h3>Colleges with the largest percentage increase in enrollment between the years of 2011 and 2010</h3>';
+                $query = "SELECT c.INSTNM FROM college c INNER JOIN enrollment e ON e.UNITID=c.UNITID ORDER BY(e.EFY2010 / e.EFY2011) *100 DESC LIMIT 20";
+                $results = \Lib\Sql::connect($query);
+                $table = \Lib\Html::TableBase($results);
+                $this->content .= $table;
             }
-
         }
-            
-            
             
             ?>
 
