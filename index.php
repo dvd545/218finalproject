@@ -100,6 +100,8 @@ class home extends page{
 
 class q1 extends page{
     public function get(){
+        $query = "SELECT c.INSTNM, e.EFY2011 FROM enrollment e INNER JOIN college c on e.UNITID=c.UNITID ORDER BY e.EFY2011 DESC LIMIT 10";
+        $results = \Lib\Sql::connect($query);
         $this->content .= '
         
             <div>
@@ -108,16 +110,7 @@ class q1 extends page{
             
             </div>';
     
-        
-        $host = "127.0.0.1";
-		$dbname = "my_db";
-		$user ="root";
-		$pass = 'password';
-		try{
-		$DBH = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
-		$DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		
-		$STH = $DBH->query("SELECT c.INSTNM, e.EFY2011 FROM enrollment e INNER JOIN college c on e.UNITID=c.UNITID ORDER BY e.EFY2011 DESC LIMIT 10");		
+        	
 		$this->content .= "<table border = 2>";
 		$this->content .= "
 			<tr>
@@ -126,7 +119,7 @@ class q1 extends page{
 			</tr>
 		";
 		
-		while($rows = $STH->fetch()){
+		foreach($results as $rows){
 			$this->content .= "<tr>";
 			$this->content .= "<td>" . $rows['INSTNM'] . "</td>";
 			$this->content .= "<td>" . $rows['EFY2011'] . "</td>";
@@ -134,11 +127,8 @@ class q1 extends page{
 		}
 		$this->content .= "</table>";
 		
-		$DBH = null;
-		}
-		catch(PDOException $e){
-			echo $e->getMessage();
-		}
+		
+		
         
     }
 
@@ -157,7 +147,7 @@ class q2 extends page{
     ';
         
         
-        SELECT c.INSTNM, f.LIAB011 FROM college c INNER JOIN finance f ON c.UNITID=f.UNITID ORDER BY f.LIAB011 DESC LIMIT 10;
+       // SELECT c.INSTNM, f.LIAB011 FROM college c INNER JOIN finance f ON c.UNITID=f.UNITID ORDER BY f.LIAB011 DESC LIMIT 10;
     }
 
 
@@ -174,7 +164,7 @@ class q3 extends page{
     
     ';
     }
-SELECT c.INSTNM, f.ASSE011 FROM college c INNER JOIN finance f ON c.UNITID=f.UNITID ORDER BY f.ASSE011 DESC LIMIT 10
+//SELECT c.INSTNM, f.ASSE011 FROM college c INNER JOIN finance f ON c.UNITID=f.UNITID ORDER BY f.ASSE011 DESC LIMIT 10
 
 
 }
@@ -187,7 +177,7 @@ class q4 extends page{
         <h3>Colleges with the largest amount of net assets per student</h3>
     
     ';
-        SELECT c.INSTNM, f.ASSE011, e.EFY2011, round(f.ASSE011/e.EFY2011,ssetStudent FROM college c INNER JOIN finance f ON f.UNITID=c.UNITID INNER JOIN enrollment e ON c.UNITID=e.UNITID ORDER BY assetStudent DESC LIMIT 10
+       // SELECT c.INSTNM FROM college c INNER JOIN finance f ON f.UNITID=c.UNITID INNER JOIN enrollment e ON c.UNITID=e.UNITID ORDER BY (f.ASSE011/e.EFY2011) DESC LIMIT 10
     }
 
 
@@ -203,7 +193,7 @@ class q5 extends page{
     
     ';
         
-        SELECT c.INSTNM FROM college c INNER JOIN enrollment e ON e.UNITID=c.UNITID ORDER BY(e.EFY2010 / e.EFY2011) *100 DESC LIMIT 10
+       // SELECT c.INSTNM FROM college c INNER JOIN enrollment e ON e.UNITID=c.UNITID ORDER BY(e.EFY2010 / e.EFY2011) *100 DESC LIMIT 10
     
     }
 }

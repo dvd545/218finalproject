@@ -67,101 +67,60 @@
         <div class="col-md-12">
             
         <?php
-                error_reporting(E_ALL);
+        error_reporting(E_ALL);
+        ini_set('display_errors', '1');
+        require 'autoloader.php';
+        $program = new program();
+        class program{
+        function __construct(){
+            $page = 'home';
+                $arg = NULL;
 
-                ini_set('display_errors', '1');
+                if(isset($_REQUEST['page'])){
+                    $page = $_REQUEST['page'];
+                }
 
-                require 'autoloader.php';
-                    $program = new program();
+                if(isset($_REQUEST['arg'])){
+                    $arg = $_REQUEST['arg'];
+                }
+
+                $page = new $page($arg);
+
+                }
+
+            }
+
+            abstract class page{
+                public $content;
+
+                function __construct($arg = NULL){
+                        $this->get();
+                }
+
+                function get(){
+                }
+
+                function __destruct(){
+                    echo $this->content;
+                }
+            }
 
 
-                class program{
-
-                    function __construct(){
-
-                        $page = 'home';
-                        $arg = NULL;
-
-                        if(isset($_REQUEST['page'])){
-                            $page = $_REQUEST['page'];
-                        }
-
-                        if(isset($_REQUEST['arg'])){
-                            $arg = $_REQUEST['arg'];
-                        }
-
-                        $page = new $page($arg);
-
-                    }
-
-                    }
-	
-                    abstract class page{
-
-                        public $content;
-
-                        function __construct($arg = NULL){
-
-                            if($_SERVER['REQUEST_METHOD'] == 'GET'){
-                                $this->get();
-                            }
-                            else{
-
-                                $this->post();
-                            }
-                        }
-
-    
-                        function menu(){
-                           
-                        }
-		
-                        function get(){
-                        }
-
-                        function post(){
-                        }
-
-                        function __destruct(){
-                            //Echo out some content
-                            echo $this->content;
-                        }
-
-                    }
-
-            
             class home extends page{
-
-            function get(){
-                $this->content .= '<h3>Queries are sent to a SQL database and returned to display the answers to the following</h3>';
+                function get(){
+                    $this->content .= '<h3>Queries are sent to a SQL database and returned to display the answers to the following</h3>';
                     }
 
-              }
+                }
+
             class q1 extends page{
                 public function get(){
                     $query = "SELECT c.INSTNM, e.EFY2011 FROM enrollment e INNER JOIN college c on e.UNITID=c.UNITID ORDER BY e.EFY2011 DESC LIMIT 10";
                     $results = \Lib\Sql::connect($query);
+                    $table = \Lib\Html::Table($results);
                     $this->content .= '<div><h3>Colleges that have the highest enrollment</h3></div>';
-		
-                    $this->content .= "<table class='table table-striped table-hover '>
-                                          <thead>
-                                            <tr>
-                                              <th>College Name</th>
-                                              <th> Enrollment #</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                    ";
-
-                    foreach($results as $row){
-                        $this->content .= "<tr><td>" . $row['INSTNM'] . "</td>";
-                        $this->content .= "<td>" . $row['EFY2011'] . "</td></tr>";
-
-                        }
-                    $this->content .= "</tbody></table>";
-
-                   
-
+                    $this->content .= $table;
+                    
                 }
 
 

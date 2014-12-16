@@ -2,7 +2,7 @@
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 $loader = new Loader();
-$data = $loader->openFile('data/collegename.csv');
+$data = $loader->openFile('data/effytotal.csv');
 $loader->writeDb($data);
 class Loader{
 	
@@ -33,7 +33,7 @@ class Loader{
 	public function writeDb($data){
 		$host = "127.0.0.1";
 		$dbname = "my_db";
-		$table = "college";
+		$table = "enrollment";
 		try{
 		$DBH = new PDO("mysql:host=$host;dbname=$dbname","root","password");
 		$DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -44,7 +44,7 @@ class Loader{
 				$insert[] = $value;
 			}
 			print_r($insert);
-			$STH = $DBH->prepare("insert into $table values(?,?)");
+			$STH = $DBH->prepare("insert into $table values(?,?,?)");
 			$STH->execute($insert);	
 		}
 		
