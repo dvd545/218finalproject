@@ -7,6 +7,7 @@ abstract class page{
 	public $content;
 	
 	function __construct(){
+        echo 'helloworld';
 		
 	}
 	
@@ -34,7 +35,7 @@ abstract class page{
 	}
 	
 	public function __destruct(){
-                $this->heading();
+                $this->get();
 			echo $this->content;	
     
     }

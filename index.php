@@ -2,7 +2,6 @@
 error_reporting(E_ALL);
 
 ini_set('display_errors', '1');
-echo 'test';
 
 require 'autoloader.php';
 
@@ -104,12 +103,43 @@ class q1 extends page{
         $this->content .= '
         
             <div>
-                <h1>Question</h1>
-                <h3>shows the colleges that have the highest enrollment</h3>
-            
+                <h1>Question1</h1>
+                <h3>Colleges that have the highest enrollment</h3>
             
             </div>';
     
+        
+        $host = "127.0.0.1";
+		$dbname = "my_db";
+		$user ="root";
+		$pass = 'password';
+		try{
+		$DBH = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+		$DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		
+		$STH = $DBH->query("SELECT college.INSTNM, EFY2011 FROM enrollment INNER JOIN college ON enrollment.UNITID = college.UNITID ORDER BY enrollment.EFY2011 DESC ");		
+		$this->content .= "<table border = 2>";
+		$this->content .= "
+			<tr>
+				<th>College Name</th>
+				<th>Enrollment</th>
+			</tr>
+		";
+		
+		while($rows = $STH->fetch()){
+			$this->content .= "<tr>";
+			$this->content .= "<td>" . $rows['INSTNM'] . "</td>";
+			$this->content .= "<td>" . $rows['EFY2011'] . "</td>";
+			$this->content .= "</tr>";
+		}
+		$this->content .= "</table>";
+		
+		$DBH = null;
+		}
+		catch(PDOException $e){
+			echo $e->getMessage();
+		}
+        
     }
 
 
@@ -125,6 +155,9 @@ class q2 extends page{
         <h3>Colleges with the largest amount of total liabilities</h3>
     
     ';
+        
+        
+        
     }
 
 

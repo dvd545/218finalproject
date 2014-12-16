@@ -4,7 +4,7 @@ namespace classes;
 
         public function __construct(){
 
-            $page_type = 'index';
+            $page_type = 'home';
 			if(!empty($_GET)){
 				$page_type = $_GET['page'];
 				new $page_type;
