@@ -140,21 +140,9 @@
             class q1 extends page{
                 public function get(){
                     $query = "SELECT c.INSTNM, e.EFY2011 FROM enrollment e INNER JOIN college c on e.UNITID=c.UNITID ORDER BY e.EFY2011 DESC LIMIT 10";
-                    //$connect = \Lib\Sql::connect($query);
-                    //$this->content .= \Lib\Sql::test();
+                    $results = \Lib\Sql::connect($query);
                     $this->content .= '<div><h3>Colleges that have the highest enrollment</h3></div>';
-
-
-                    $host = "127.0.0.1";
-                    $dbname = "my_db";
-                    $user ="root";
-                    $pass = 'password';
-                    $i = 0;
-                    try{
-                    $DBH = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
-                    $DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                    $STH = $DBH->query("SELECT c.INSTNM, e.EFY2011 FROM enrollment e INNER JOIN college c on e.UNITID=c.UNITID ORDER BY e.EFY2011 DESC LIMIT 10");		
+		
                     $this->content .= "<table class='table table-striped table-hover '>
                                           <thead>
                                             <tr>
@@ -165,19 +153,14 @@
                                           <tbody>
                     ";
 
-                    while($rows = $STH->fetch()){
-                        
-                        $this->content .= "<tr><td>" . $rows['INSTNM'] . "</td>";
-                        $this->content .= "<td>" . $rows['EFY2011'] . "</td></tr>";
+                    foreach($results as $row){
+                        $this->content .= "<tr><td>" . $row['INSTNM'] . "</td>";
+                        $this->content .= "<td>" . $row['EFY2011'] . "</td></tr>";
 
                         }
                     $this->content .= "</tbody></table>";
 
-                    $DBH = null;
-                    }
-                    catch(PDOException $e){
-                        echo $e->getMessage();
-                    }
+                   
 
                 }
 
@@ -240,7 +223,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2014</p>
+        <p>David Schmidt IS218 Final Project</p>
       </footer>
     </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
